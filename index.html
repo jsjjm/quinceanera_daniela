@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis XV Años - Daniela</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2b3a2a;
+            --text-light: #ffffff;
+            --accent-color: #e2e8c0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            overflow-x: hidden;
+            text-align: center;
+            background-image: linear-gradient(rgba(43, 58, 42, 0.4), rgba(43, 58, 42, 0.9)), url('bg.png');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Fireflies animation */
+        .firefly {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background-color: #fffbba;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px #fffbba, 0 0 20px 5px #e2e8c0;
+            animation: float 10s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
+            opacity: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(to bottom, rgba(43, 58, 42, 0) 0%, rgba(85, 107, 79, 0.9) 30%, rgba(85, 107, 79, 1) 100%);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            min-height: 100vh;
+        }
+        
+        .header {
+            margin-top: 10vh;
+            margin-bottom: 60px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5.5rem;
+            line-height: 1;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.6), 0 0 20px rgba(255,255,255,0.3);
+            margin-bottom: 20px;
+        }
+
+        .section-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .section-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .countdown-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin: 40px 0 20px;
+            text-transform: uppercase;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .countdown-item {
+            background-color: white;
+            color: #333;
+            border-radius: 8px;
+            width: 70px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        .countdown-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            color: #666;
+        }
+
+        .message {
+            font-style: italic;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 30px 0;
+            padding: 0 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .family-section {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .family-block h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .family-block p {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem;
+            margin: 5px 0;
+        }
+
+        .date-section {
+            margin: 40px 0;
+        }
+
+        .date-display {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .date-day, .date-month {
+            border-bottom: 1px solid white;
+            border-top: 1px solid white;
+            padding: 5px 0;
+        }
+        
+        .date-number {
+            font-size: 3.5rem;
+            line-height: 1;
+        }
+
+        .time-location {
+            font-size: 1.1rem;
+            margin: 20px 0;
+        }
+
+        .btn-map {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(144, 161, 125, 0.8);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-map:hover {
+            background-color: rgba(144, 161, 125, 1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn-map i {
+            font-size: 1.3rem;
+        }
+
+        .icons-section {
+            display: flex;
+            justify-content: space-around;
+            margin: 50px 0 80px;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-item span {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .icon-item i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .princess-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+            z-index: 20;
+            filter: drop-shadow(0 -10px 20px rgba(0,0,0,0.3));
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Fireflies background effect -->
+    <div id="fireflies"></div>
+
+    <div class="container">
+        
+        <div class="header">
+            <div class="subtitle">MIS XV AÑOS</div>
+            <div class="title">Daniela</div>
+        </div>
+
+        <div class="section-fade">
+            <div class="countdown-title">Prepárate porque faltan</div>
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Días</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minutos</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Segundos</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-fade message">
+            Junto a mi familia queremos invitarles a compartir un dia muy especial para nosotros
+        </div>
+
+        <div class="section-fade family-section">
+            <div class="family-block">
+                <h3>GRACIAS A MI MADRE</h3>
+                <p>Jacqueline</p>
+                <p>Garate</p>
+            </div>
+            <div class="family-block">
+                <h3>MIS PADRINOS</h3>
+                <p>Luis Julian</p>
+                <p>Noelia Mosselli</p>
+            </div>
+        </div>
+
+        <div class="section-fade date-section">
+            <div class="date-display">
+                <span class="date-day">Sábado</span>
+                <span class="date-number">05</span>
+                <span class="date-month">Setiembre</span>
+            </div>
+            <div class="time-location">
+                <p>Hora: 9:00 pm</p>
+                <p style="margin-top: 10px;">Lugar del evento</p>
+            </div>
+            <a href="https://maps.app.goo.gl/6hc9a7qZNRU3FRk2A" target="_blank" class="btn-map">
+                ¿Como llegar? <i class="fa-solid fa-location-dot"></i>
+            </a>
+        </div>
+
+        <div class="section-fade icons-section">
+            <div class="icon-item">
+                <span>ELLOS</span>
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div class="icon-item">
+                <span>ELLAS</span>
+                <i class="fa-solid fa-shoe-prints"></i> <!-- Alternatively a custom heel icon but fontawesome has shoe prints or we can use an image, I will use a high heel equivalent if possible, wait fa-shoe-prints is okay, or a dress icon -->
+                <!-- Actually, let's use fa-person-dress -->
+            </div>
+            <div class="icon-item">
+                <span>TODOS</span>
+                <i class="fa-solid fa-gift"></i>
+            </div>
+        </div>
+
+        <!-- Princess at the bottom -->
+        <div class="section-fade">
+            <img src="princess.png" alt="Princess Tiana" class="princess-img">
+        </div>
+
+    </div>
+
+    <script>
+        // Generate fireflies
+        const firefliesContainer = document.getElementById('fireflies');
+        for (let i = 0; i < 30; i++) {
+            let firefly = document.createElement('div');
+            firefly.classList.add('firefly');
+            
+            // Random properties
+            let x = Math.random() * 100;
+            let y = Math.random() * 100;
+            let duration = 5 + Math.random() * 10;
+            let delay = Math.random() * 5;
+            
+            firefly.style.left = `${x}vw`;
+            firefly.style.top = `${y}vh`;
+            firefly.style.animationDuration = `${duration}s`;
+            firefly.style.animationDelay = `${delay}s`;
+            
+            firefliesContainer.appendChild(firefly);
+        }
+
+        // Countdown Timer
+        // Target date: September 5, next occurrence
+        const currentYear = new Date().getFullYear();
+        let targetDate = new Date(`September 5, ${currentYear} 21:00:00`).getTime();
+        
+        // If the date has already passed this year, set it to next year
+        if (new Date().getTime() > targetDate) {
+            targetDate = new Date(`September 5, ${currentYear + 1} 21:00:00`).getTime();
+        }
+
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days < 10 ? '0' + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? '0' + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? '0' + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("days").innerHTML = "00";
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+            }
+        }, 1000);
+
+        // Scroll animations using Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section-fade').forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Fix the high heel icon with a custom inline svg since fontawesome free might lack a good single high heel.
+        // I will just modify the HTML dynamically here to replace it with an SVG if needed, but for now I'll just change the class in the HTML string below
+    </script>
+</body>
+</html>
