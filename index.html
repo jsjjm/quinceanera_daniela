@@ -35,6 +35,82 @@
             min-height: 100vh;
         }
 
+        /* --- OVERLAY --- */
+        #welcome-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--primary-color);
+            background-image: linear-gradient(rgba(43, 58, 42, 0.8), rgba(43, 58, 42, 0.9)), url('bg.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out, visibility 1s ease-out;
+        }
+        #welcome-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .overlay-content {
+            text-align: center;
+            animation: pulse 2s infinite alternate;
+        }
+        .btn-open {
+            background: rgba(144, 161, 125, 0.9);
+            color: white;
+            border: 2px solid white;
+            padding: 15px 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        .btn-open:hover {
+            background: rgba(144, 161, 125, 1);
+            transform: scale(1.05);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        /* --- MUSIC CONTROLS --- */
+        #music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(144, 161, 125, 0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        #music-toggle:hover {
+            background-color: rgba(144, 161, 125, 1);
+            transform: scale(1.1);
+        }
+        #music-toggle i {
+            font-size: 1.2rem;
+            color: white;
+        }
+        .spin {
+            animation: spin 4s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
         /* Fireflies animation */
         .firefly {
             position: fixed;
@@ -286,6 +362,25 @@
 </head>
 <body>
     
+    <!-- Audio element with a beautiful classical waltz -->
+    <audio id="bg-audio" loop>
+        <source src="evangeline_quince.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- Welcome Overlay -->
+    <div id="welcome-overlay">
+        <div class="overlay-content">
+            <h1 style="font-family: 'Great Vibes', cursive; font-size: 4rem; margin-bottom: 30px; text-shadow: 2px 2px 5px rgba(0,0,0,0.8);">Daniela</h1>
+            <button class="btn-open" id="btn-open">Abrir Invitación</button>
+        </div>
+    </div>
+
+    <!-- Music Control Button -->
+    <div id="music-toggle">
+        <i class="fa-solid fa-music"></i>
+    </div>
+
     <!-- Fireflies background effect -->
     <div id="fireflies"></div>
 
@@ -357,8 +452,7 @@
             </div>
             <div class="icon-item">
                 <span>ELLAS</span>
-                <i class="fa-solid fa-shoe-prints"></i> <!-- Alternatively a custom heel icon but fontawesome has shoe prints or we can use an image, I will use a high heel equivalent if possible, wait fa-shoe-prints is okay, or a dress icon -->
-                <!-- Actually, let's use fa-person-dress -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="2.5rem" height="2.5rem" viewBox="0 0 256 256" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"><path fill="var(--accent-color)" d="m231 156.19l-51-11.49L69.66 34.34a8 8 0 0 0-11.56.26C36.11 58.64 24 89 24 120v72a16 16 0 0 0 16 16h32a16 16 0 0 0 16-16v-48.94c2.49 1.45 4.94 3 7.34 4.64a112.45 112.45 0 0 1 40.55 50.39a15.9 15.9 0 0 0 14.83 9.91H240a16 16 0 0 0 16-16v-4.73a31.72 31.72 0 0 0-25-31.08M72 192H40v-63.71a110.9 110.9 0 0 1 32 7.12Zm168 0h-89.32a128.36 128.36 0 0 0-46.27-57.46a126.9 126.9 0 0 0-64.12-22.26a110.67 110.67 0 0 1 24.17-60.5l105.88 105.88a8 8 0 0 0 3.9 2.14l53.24 12A15.81 15.81 0 0 1 240 187.31Z"/></svg>
             </div>
             <div class="icon-item">
                 <span>TODOS</span>
@@ -366,7 +460,6 @@
             </div>
         </div>
 
-        <!-- Princess at the bottom -->
         <div class="section-fade">
             <img src="princess_tiana.png" alt="Princess Tiana" class="princess-img">
         </div>
@@ -374,6 +467,39 @@
     </div>
 
     <script>
+        // Audio and Overlay Logic
+        const btnOpen = document.getElementById('btn-open');
+        const overlay = document.getElementById('welcome-overlay');
+        const audio = document.getElementById('bg-audio');
+        const musicToggle = document.getElementById('music-toggle');
+        const musicIcon = musicToggle.querySelector('i');
+        let isPlaying = false;
+
+        btnOpen.addEventListener('click', () => {
+            overlay.classList.add('hidden');
+            audio.play().then(() => {
+                isPlaying = true;
+                musicIcon.classList.remove('fa-music');
+                musicIcon.classList.add('fa-volume-high');
+                musicToggle.classList.add('spin'); // Optional spinning effect when playing
+            }).catch(e => console.log("Audio play failed:", e));
+        });
+
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                musicIcon.classList.remove('fa-volume-high');
+                musicIcon.classList.add('fa-volume-xmark');
+                musicToggle.classList.remove('spin');
+            } else {
+                audio.play();
+                musicIcon.classList.remove('fa-volume-xmark');
+                musicIcon.classList.add('fa-volume-high');
+                musicToggle.classList.add('spin');
+            }
+            isPlaying = !isPlaying;
+        });
+
         // Generate fireflies
         const firefliesContainer = document.getElementById('fireflies');
         for (let i = 0; i < 30; i++) {
@@ -395,11 +521,9 @@
         }
 
         // Countdown Timer
-        // Target date: September 5, next occurrence
         const currentYear = new Date().getFullYear();
         let targetDate = new Date(`September 5, ${currentYear} 21:00:00`).getTime();
         
-        // If the date has already passed this year, set it to next year
         if (new Date().getTime() > targetDate) {
             targetDate = new Date(`September 5, ${currentYear + 1} 21:00:00`).getTime();
         }
@@ -439,9 +563,6 @@
         document.querySelectorAll('.section-fade').forEach((element) => {
             observer.observe(element);
         });
-
-        // Fix the high heel icon with a custom inline svg since fontawesome free might lack a good single high heel.
-        // I will just modify the HTML dynamically here to replace it with an SVG if needed, but for now I'll just change the class in the HTML string below
     </script>
 </body>
 </html>
